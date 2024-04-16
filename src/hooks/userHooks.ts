@@ -23,3 +23,22 @@ export const useLoginMutation = () =>
     })
 
 
+
+export const useRegisterMutation = () =>
+    useMutation({
+        mutationFn: async ({
+                               userName,
+                               userPassword,
+                           }: {
+            userName: string
+            userPassword: string
+        }) =>
+            (
+                await apiClient.post<userID>(`api/v1/users/register`, {
+                    userName,
+                    userPassword,
+                })
+            ).data,
+    })
+
+

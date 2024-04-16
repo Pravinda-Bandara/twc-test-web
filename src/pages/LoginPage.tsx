@@ -73,7 +73,7 @@ export function LoginPage() {
 
                     <button type="submit" disabled={isPending}>Login</button>
                     <span> or </span>
-                    <button className="underline" type="button">Click here to Register</button>
+                    <button className="underline" type="button" onClick={()=>navigate("/register")}>Click here to Register</button>
 
 
                 </form>
