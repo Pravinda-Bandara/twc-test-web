@@ -1,4 +1,4 @@
-import ButtonOne from "../component/ButtonOne.tsx";
+
 import Logo from "../component/Logo.tsx";
 
 import {useDeleteContactMutation, useGetContactListQuery} from "../hooks/contactHooks.ts";
@@ -11,6 +11,7 @@ export function ContactListPage() {
 
     const navigate = useNavigate()
     const redirect ='/login'
+    const addNewContact ='/addcontact'
     const { data:contacts,refetch} = useGetContactListQuery();
     const { mutateAsync: deleteContact } = useDeleteContactMutation();
     const {state, dispatch} = useContext(Store)
@@ -51,7 +52,7 @@ export function ContactListPage() {
                     <div>
                         <div className="flex items-center justify-between">
                             <h1 className="font-bold text-3xl ">Contact</h1>
-                            <ButtonOne isBlack={true} text="Add new content"/>
+                            <button type="button" onClick={()=>navigate(addNewContact)}>add new contest</button>
                         </div>
                         <div className="rounded-3xl border-2 p-5 flex justify-center">
                             <table>
