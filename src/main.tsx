@@ -9,6 +9,7 @@ import {NewContentPage} from "./pages/NewContentPage.tsx";
 import {ContactListPage} from "./pages/ContentListPage.tsx";
 import {WelcomePage} from "./pages/WelcomePage.tsx";
 import {QueryClient, QueryClientProvider} from "@tanstack/react-query";
+import {StoreProvider} from "./Store.tsx";
 
 const queryClient = new QueryClient();
 const router = createBrowserRouter(
@@ -25,8 +26,11 @@ const router = createBrowserRouter(
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
     <React.StrictMode>
+        <StoreProvider>
         <QueryClientProvider client={queryClient}>
             <RouterProvider router={router} />
         </QueryClientProvider>
+        </StoreProvider>
     </React.StrictMode>,
 )
+
