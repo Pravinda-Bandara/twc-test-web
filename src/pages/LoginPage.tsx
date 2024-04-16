@@ -1,15 +1,34 @@
 import { FormEvent, useState } from 'react';
 import Logo from "../component/Logo.tsx";
-import ButtonOne from "../component/ButtonOne.tsx";
+import {useLoginMutation} from "../hooks/userHooks.ts";
+import {useNavigate} from "react-router-dom";
+import {toast} from "react-toastify";
+import {ApiError, getError} from "../utils/ErrorUtil.ts";
+
 
 export function LoginPage() {
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
+    const navigate = useNavigate()
+    const { mutateAsync: login ,isPending} = useLoginMutation();
+    const [userName, setuserName] = useState('');
+    const [userPassword, setuserPassword] = useState('');
 
-    const handleLogin = (event: FormEvent) => {
+    const handleLogin =async (event: FormEvent) => {
         event.preventDefault();
-        console.log('Email:', email);
-        console.log('Password:', password);
+        try {
+            const data = await login({
+                userName,
+                userPassword,
+            })
+        console.log(data.userId);
+            navigate('/contacts')
+            /*localStorage.setItem('userInfo', JSON.stringify(data))*/
+
+
+        } catch (err) {
+            toast.error(getError(err as ApiError),{
+                autoClose:1000
+            })
+        }
     };
 
     return (
@@ -21,8 +40,8 @@ export function LoginPage() {
                     <div>
                         <input
                             type="email"
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
+                            value={userName}
+                            onChange={(e) => setuserName(e.target.value)}
                             placeholder="e-mail"
                             required
                             className="border-black border-2 rounded-3xl h-10
@@ -32,8 +51,8 @@ export function LoginPage() {
                     <div>
                         <input
                             type="password"
-                            value={password}
-                            onChange={(e) => setPassword(e.target.value)}
+                            value={userPassword}
+                            onChange={(e) => setuserPassword(e.target.value)}
                             placeholder="password"
                             required
                             className="border-black border-2 rounded-3xl h-10
@@ -42,7 +61,7 @@ export function LoginPage() {
                     </div>
 
 
-                    <ButtonOne isBlack={true} text="login "/>
+                    <button type="submit" disabled={isPending}>Login</button>
                     <span> or </span>
                     <button className="underline" type="button">Click here to Register</button>
 
