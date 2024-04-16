@@ -1,22 +1,47 @@
-import {FormEvent, useState} from 'react';
+import {FormEvent, useContext, useEffect, useState} from 'react';
 import Logo from "../component/Logo.tsx";
-import ButtonOne from "../component/ButtonOne.tsx";
+import {Store} from "../Store.tsx";
+import {toast} from "react-toastify";
+import {ApiError, getError} from "../utils/ErrorUtil.ts";
+import {useNavigate} from "react-router-dom";
+import { useRegisterMutation} from "../hooks/userHooks.ts";
 
 export function RegisterPage() {
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
+    const [userName, setuserName] = useState('');
+    const [userPassword, setuserPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
 
-    const handleRegister = (event: FormEvent) => {
+    const { state, dispatch } = useContext(Store);
+    const { userInfo } = state
+    const navigate = useNavigate()
+    const redirect ='/contacts'
+    const { mutateAsync: register ,isPending} = useRegisterMutation();
+
+
+    const handleRegister =async (event: FormEvent) => {
         event.preventDefault();
-        console.log('Email:', email);
-        console.log('Password:', password);
-        console.log('Confirm Password:', confirmPassword);
+        try {
+            const data = await register({
+                userName,
+                userPassword,
+            })
+            navigate('/welcome')
+            dispatch({ type: 'USER_SIGNIN', payload: data.userId })
+            localStorage.setItem('userInfo', JSON.stringify(data.userId))
+        } catch (err) {
+            toast.error(getError(err as ApiError),{
+                autoClose:1000
+            })
+        }
     };
 
-    const handleBackToLogin = () => {
-        console.log('Navigate back to login page');
-    };
+
+
+    useEffect(() => {
+        if (userInfo) {
+            navigate(redirect)
+        }
+    }, [userInfo])
 
     return (
         <>
@@ -29,8 +54,8 @@ export function RegisterPage() {
                                 <input
                                     type="email"
                                     placeholder="e-mail"
-                                    value={email}
-                                    onChange={(e) => setEmail(e.target.value)}
+                                    value={userName}
+                                    onChange={(e) => setuserName(e.target.value)}
                                     required
                                     className="border-black border-2 rounded-3xl h-10
                                 p-5 my-2"
@@ -40,8 +65,8 @@ export function RegisterPage() {
                                 <input
                                     type="password"
                                     placeholder="create password"
-                                    value={password}
-                                    onChange={(e) => setPassword(e.target.value)}
+                                    value={userPassword}
+                                    onChange={(e) => setuserPassword(e.target.value)}
                                     required
                                     className="border-black border-2 rounded-3xl h-10
                                 p-5 my-2"
@@ -59,13 +84,13 @@ export function RegisterPage() {
                                 />
                             </div>
 
-
+                            <div>
+                                <button type="submit" disabled={isPending}>Register</button>
+                            </div>
                         </form>
+
                         <div>
-                            <ButtonOne isBlack={true} text="register"/>
-                        </div>
-                        <div>
-                            <button className="underline" type="button" onClick={handleBackToLogin}>&lt; Back To Login
+                            <button className="underline" type="button" onClick={()=>navigate("/login")}>&lt; Back To Login
                             </button>
                         </div>
                     </div>
