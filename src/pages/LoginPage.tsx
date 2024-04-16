@@ -1,16 +1,23 @@
-import { FormEvent, useState } from 'react';
+import {FormEvent, useContext, useEffect, useState} from 'react';
 import Logo from "../component/Logo.tsx";
 import {useLoginMutation} from "../hooks/userHooks.ts";
 import {useNavigate} from "react-router-dom";
 import {toast} from "react-toastify";
 import {ApiError, getError} from "../utils/ErrorUtil.ts";
+import {Store} from "../Store.tsx";
 
 
 export function LoginPage() {
     const navigate = useNavigate()
+    const redirect ='/contacts'
     const { mutateAsync: login ,isPending} = useLoginMutation();
     const [userName, setuserName] = useState('');
     const [userPassword, setuserPassword] = useState('');
+
+
+
+    const { state, dispatch } = useContext(Store)
+    const { userInfo } = state
 
     const handleLogin =async (event: FormEvent) => {
         event.preventDefault();
@@ -19,17 +26,20 @@ export function LoginPage() {
                 userName,
                 userPassword,
             })
-        console.log(data.userId);
             navigate('/contacts')
-            /*localStorage.setItem('userInfo', JSON.stringify(data))*/
-
-
+            dispatch({ type: 'USER_SIGNIN', payload: data.userId })
+            localStorage.setItem('userInfo', JSON.stringify(data.userId))
         } catch (err) {
             toast.error(getError(err as ApiError),{
                 autoClose:1000
             })
         }
     };
+    useEffect(() => {
+        if (userInfo) {
+            navigate(redirect)
+        }
+    }, [userInfo])
 
     return (
         <div className="flex justify-evenly items-center h-screen">

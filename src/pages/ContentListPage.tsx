@@ -1,34 +1,18 @@
 import ButtonOne from "../component/ButtonOne.tsx";
 import Logo from "../component/Logo.tsx";
 
-export function ContactListPage() {
-    const contactList = [
-        {
-            id: 1,
-            profilePic: 'https://via.placeholder.com/50',
-            fullName: 'John Doe',
-            gender: 'Male',
-            email: 'john@example.com',
-            phoneNumber: '123-456-7890',
-        },
-        {
-            id: 2,
-            profilePic: 'https://via.placeholder.com/50',
-            fullName: 'Jane Smith',
-            gender: 'Female',
-            email: 'jane@example.com',
-            phoneNumber: '987-654-3210',
-        },
-        {
-            id: 2,
-            profilePic: 'https://via.placeholder.com/50',
-            fullName: 'Jane Smith',
-            gender: 'Female',
-            email: 'jane@example.com',
-            phoneNumber: '987-654-3210',
-        }
-    ];
+import {useGetContactListQuery} from "../hooks/contactHooks.ts";
+import {useContext, useEffect} from "react";
+import {Store} from "../Store.tsx";
+import {useNavigate} from "react-router-dom";
 
+
+export function ContactListPage() {
+    const navigate = useNavigate()
+    const redirect ='/login'
+    const { data:contacts} = useGetContactListQuery();
+    const {state, dispatch} = useContext(Store)
+    console.log(state.userInfo);
     const handleEdit = () => {
         // Implement edit functionality
     };
@@ -36,6 +20,21 @@ export function ContactListPage() {
     const handleDelete = () => {
         // Implement delete functionality
     };
+    const handleLogOut = () => {
+        dispatch({ type: 'USER_SIGNOUT' })
+        localStorage.removeItem('userInfo')
+        navigate(redirect)
+    };
+    if (state.userInfo==null){
+        navigate(redirect)
+    }
+    useEffect(() => {
+        if (state.userInfo === null ) {
+            navigate(redirect);
+        }
+    }, [state.userInfo, navigate]);
+
+
 
     return (
         <>
@@ -60,18 +59,18 @@ export function ContactListPage() {
                                 </tr>
                                 </thead>
                                 <tbody>
-                                {contactList.map((contact) => (
-                                    <tr key={contact.id} className="text-center">
+                                {contacts?.map((contact) => (
+                                    <tr key={contact._id} className="text-center">
                                         <td className="py-2 px-4">
                                             <div className="flex justify-center">
-                                                <img className="rounded-full h-12 w-12" src={contact.profilePic}
+                                                <img className="rounded-full h-12 w-12" src="/src/assets/react.svg"
                                                      alt="Profile"/>
                                             </div>
                                         </td>
-                                        <td className="py-2 px-4">{contact.fullName}</td>
+                                        <td className="py-2 px-4">{contact.name}</td>
                                         <td className="py-2 px-4">{contact.gender}</td>
                                         <td className="py-2 px-4">{contact.email}</td>
-                                        <td className="py-2 px-4">{contact.phoneNumber}</td>
+                                        <td className="py-2 px-4">{contact.number}</td>
                                         <td className="py-2 px-4">
                         <span
                             role="img"
@@ -96,7 +95,7 @@ export function ContactListPage() {
                             </table>
                         </div>
                     </div>
-                    <button className="underline float-end" type="button"> LogOut
+                    <button className="underline float-end" type="button" onClick={() =>handleLogOut()}> LogOut
                     </button>
                 </div>
 
