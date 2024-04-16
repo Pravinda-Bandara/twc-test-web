@@ -1,24 +1,24 @@
 import './App.css'
 import {Outlet} from "react-router-dom";
 import './index.css'
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 
 
 
 
 
 function App() {
-
-
     return (
-        <>
-            {/*<ButtonOne isBlack={true} text="Add new content" />
-        <ButtonOne isBlack={false} text="Add new content" />*/}
-
+        <div>
+            <ToastContainer />
             <main className="container mx-auto px-12">
                 <Outlet/>
             </main>
-        </>
-    )
+        </div>
+    );
 }
+
 
 export default App
