@@ -1,4 +1,4 @@
-import { useQuery } from "@tanstack/react-query";
+import {useMutation, useQuery} from "@tanstack/react-query";
 import apiClient from "../apiClient.ts";
 import * as mongoose from "mongoose";
 
@@ -39,3 +39,9 @@ export const useGetContactListQuery = () =>
             return (await apiClient.get<ContactResponse[]>(`api/v1/contacts/${contactId}`)).data;
         },
     });
+
+export const useDeleteContactMutation = () =>
+    useMutation({
+        mutationFn: async (userId: string) =>
+            (await apiClient.delete<{ message: string }>(`api/v1/contacts/${userId}`)).data,
+    })

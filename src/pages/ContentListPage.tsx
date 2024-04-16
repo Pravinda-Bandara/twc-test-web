@@ -1,25 +1,25 @@
 import ButtonOne from "../component/ButtonOne.tsx";
 import Logo from "../component/Logo.tsx";
 
-import {useGetContactListQuery} from "../hooks/contactHooks.ts";
+import {useDeleteContactMutation, useGetContactListQuery} from "../hooks/contactHooks.ts";
 import {useContext, useEffect} from "react";
 import {Store} from "../Store.tsx";
 import {useNavigate} from "react-router-dom";
 
 
 export function ContactListPage() {
+
     const navigate = useNavigate()
     const redirect ='/login'
-    const { data:contacts} = useGetContactListQuery();
+    const { data:contacts,refetch} = useGetContactListQuery();
+    const { mutateAsync: deleteContact } = useDeleteContactMutation();
     const {state, dispatch} = useContext(Store)
     console.log(state.userInfo);
     const handleEdit = () => {
         // Implement edit functionality
     };
 
-    const handleDelete = () => {
-        // Implement delete functionality
-    };
+
     const handleLogOut = () => {
         dispatch({ type: 'USER_SIGNOUT' })
         localStorage.removeItem('userInfo')
@@ -34,7 +34,14 @@ export function ContactListPage() {
         }
     }, [state.userInfo, navigate]);
 
-
+    const handleDelete = async (contactId:string) => {
+        try {
+            await deleteContact(contactId);
+            refetch();
+        } catch (error) {
+            console.error("Error deleting contact:", error);
+        }
+    };
 
     return (
         <>
@@ -84,7 +91,7 @@ export function ContactListPage() {
                                                 role="img"
                                                 aria-label="Delete"
                                                 className="cursor-pointer m-0.5"
-                                                onClick={() => handleDelete()}
+                                                onClick={() => handleDelete(contact._id)}
                                             >
                             🗑️
                         </span>
