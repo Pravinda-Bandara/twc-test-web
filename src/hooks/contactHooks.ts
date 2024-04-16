@@ -18,9 +18,16 @@ export enum Gender {
     MALE = "male",
     FEMALE = "female"
 }
+interface ContactRequest {
+    number: string;
+    name: string;
+    email: string;
+    gender: Gender;
+    user: string;
+}
 
-interface ContactResponse {
-    _id: mongoose.Types.ObjectId | undefined;
+export interface ContactResponse {
+    _id: mongoose.Types.ObjectId | undefined ;
     number: string;
     name: string;
     email: string;
@@ -35,7 +42,6 @@ export const useGetContactListQuery = () =>
             if (!contactId) {
                 throw new Error('Contact ID not found in localStorage');
             }
-            // Use the contact ID retrieved from localStorage in the API call
             return (await apiClient.get<ContactResponse[]>(`api/v1/contacts/${contactId}`)).data;
         },
     });
@@ -44,4 +50,19 @@ export const useDeleteContactMutation = () =>
     useMutation({
         mutationFn: async (userId: string) =>
             (await apiClient.delete<{ message: string }>(`api/v1/contacts/${userId}`)).data,
+    })
+
+
+
+export const useSignupMutation = () =>
+    useMutation({
+        mutationFn: async ({
+                               user,
+            number,name,email,gender
+                           }: ContactRequest) =>
+            (
+                await apiClient.post<ContactResponse>(`api/v1/contacts/`, {
+                    user,name,number,email,gender
+                })
+            ).data,
     })
