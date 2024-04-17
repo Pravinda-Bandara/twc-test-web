@@ -32,6 +32,16 @@ export function ContactListPage() {
     const { mutateAsync: updateUser, isPending: loadingUpdate } =
         useUpdateContactMutation()
 
+   /* const contactsAmount:number= contacts?.length*/
+
+    useEffect(() => {
+        if (state.userInfo === null ) {
+            navigate(redirect);
+        }
+        /*if (contactsAmount==0){
+            navigate("/welcome")
+        }*/
+    }, [state.userInfo, navigate]);
     const handleEdit = (rowId: string, name: string, gender: Gender, email: string, number: string) => {
         setNameEdit(name)
         setGenderEdit(gender)
@@ -49,11 +59,7 @@ export function ContactListPage() {
     if (state.userInfo==null){
         navigate(redirect)
     }
-    useEffect(() => {
-        if (state.userInfo === null ) {
-            navigate(redirect);
-        }
-    }, [state.userInfo, navigate]);
+
 
     const handleDelete = async (contactId:string) => {
         try {
@@ -84,57 +90,79 @@ export function ContactListPage() {
 
     return (
         <>
-            <div className="flex justify-center items-center h-screen">
+            <div className="flex justify-center items-center h-screen flex-col">
                 <div>
-                    <Logo textColor="text-black-500"/>
+                    <Logo textColor="text-white"/>
                     <div>
                         <div className="flex items-center justify-between">
-                            <h1 className="font-bold text-3xl ">Contact</h1>
+                            <h1 className="font-bold text-3xl text-white">Contact</h1>
 
-                            <button type="button" className="px-6 w-3/5 my-10 py-2 rounded bg-customBlue text-white border
+                            <button type="button" className="px-6 w-1/5 my-10 py-2 rounded bg-customBlue text-white border
                                 rounded-2xl border-white hover:bg-white hover:text-customBlue hover:border-customBlue"
-                                    onClick={()=>navigate(addNewContact)}>add new contest</button>
+                                    onClick={() => navigate(addNewContact)}>add new contest
+                            </button>
+
                         </div>
-                        <div className="rounded-3xl border-2 p-5 flex justify-center">
+                        <div className="rounded-3xl border-2 pb-4 px-12 flex justify-center bg-white">
                             <table>
-                                <thead >
-                                <tr className="text-center">
-                                    <th >Profile Pic</th>
-                                    <th >Full Name</th>
-                                    <th >Gender</th>
-                                    <th >Email</th>
-                                    <th >Phone Number</th>
-                                    <th >Actions</th>
+                                <thead className="px-12">
+                                <tr className="text-center ">
+                                    <th className="py-5">Profile</th>
+                                    <th>Full Name</th>
+                                    <th>Gender</th>
+                                    <th>Email</th>
+                                    <th>Phone Number</th>
+                                    <th>Actions</th>
                                 </tr>
                                 </thead>
                                 <tbody>
                                 {contacts?.map((contact) => (
-                                    <tr  key={contact._id} className="text-center">
+                                    <tr key={contact._id} className="text-center">
                                         <td className="w-1/6">
                                             <div className="flex justify-center">
                                                 {contact.gender == 'male' ?
-                                                    <img className="rounded-full h-12 w-12" src="/src/assets/maleProPic.png"
+                                                    <img className="rounded-full h-12 w-12 my-1"
+                                                         src="/src/assets/maleProPic.png"
                                                          alt="Profile"/> :
-                                                    <img className="rounded-full h-12 w-12" src="/src/assets/femaleProPic.png"
+                                                    <img className="rounded-full h-12 w-12 my-1"
+                                                         src="/src/assets/femaleProPic.png"
                                                          alt="Profile"/>}
                                             </div>
                                         </td>
-                                        {editRow==contact._id? <>
-                                            <td ><input className="text-center bg-blue-300"  onChange={(e) => setNameEdit(e.target.value)} value={nameEdit} type="text"/></td>
-                                            <td ><input className="text-center bg-blue-300" onChange={(e) => setGenderEdit(e.target.value)}  value={genderEdit} type="text"/></td>
-                                            <td ><input className="text-center bg-blue-300" onChange={(e) => setEmailEdit(e.target.value)}  value={emailEdit} type="text"/></td>
-                                            <td ><input className="text-center bg-blue-300" onChange={(e) => setNumberEdit(e.target.value)}  value={numberEdit} type="text"/></td>
-                                            <td><button onClick={()=>handleSaveEdit()}>Save</button></td>
+                                        {editRow == contact._id ? <>
+                                            <td><input className="bg-blue-100"
+                                                       onChange={(e) => setNameEdit(e.target.value)} value={nameEdit}
+                                                       type="text"/></td>
+                                            <td><input className="bg-blue-100"
+                                                       onChange={(e) => setGenderEdit(e.target.value)}
+                                                       value={genderEdit} type="text"/></td>
+                                            <td><input className="bg-blue-100"
+                                                       onChange={(e) => setEmailEdit(e.target.value)} value={emailEdit}
+                                                       type="text"/></td>
+                                            <td><input className="bg-blue-100"
+                                                       onChange={(e) => setNumberEdit(e.target.value)}
+                                                       value={numberEdit} type="text"/></td>
+                                            <td>
+                                                <button className="px-4 py-2 rounded bg-customBlue
+                                                text-white border rounded-2xl border-white hover:bg-white
+                                                hover:text-customBlue hover:border-customBlue"
+                                                        onClick={() => handleSaveEdit()}>Save
+                                                </button>
+                                            </td>
                                         </> : <>
-                                            <td ><input className="text-center outline-none"  disabled={false} value={contact.name} type="text"/></td>
-                                            <td ><input className="text-center outline-none" disabled={false} value={contact.gender} type="text"/></td>
-                                            <td ><input className="text-center outline-none" disabled={false} value={contact.email} type="text"/></td>
-                                            <td ><input className="text-center outline-none" disabled={false} value={contact.number} type="text"/></td>
-                                            <td >
+                                            <td><input  disabled={false}
+                                                       value={contact.name} type="text"/></td>
+                                            <td><input  disabled={false}
+                                                       value={contact.gender} type="text"/></td>
+                                            <td><input  disabled={false}
+                                                       value={contact.email} type="text"/></td>
+                                            <td><input disabled={false}
+                                                       value={contact.number} type="text"/></td>
+                                            <td>
                         <span role="img"
                               aria-label="Edit"
                               className="cursor-pointer m-0.5"
-                              onClick={() => handleEdit(contact._id,contact.name,contact.gender,contact.email,contact.number)}>✏️</span>
+                              onClick={() => handleEdit(contact._id, contact.name, contact.gender, contact.email, contact.number)}>✏️</span>
                                                 <span role="img"
                                                       aria-label="Delete"
                                                       className="cursor-pointer m-0.5"
@@ -149,9 +177,13 @@ export function ContactListPage() {
                             </table>
                         </div>
                     </div>
-                    <button className="underline float-end" type="button" onClick={() => handleLogOut()}> LogOut
+                </div>
+                <div className="self-end mb-10">
+                    <button className="underline float-end text-white mt-5" type="button"
+                            onClick={() => handleLogOut()}> LogOut
                     </button>
                 </div>
+
 
             </div>
 
