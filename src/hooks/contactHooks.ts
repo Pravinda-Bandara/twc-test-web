@@ -66,3 +66,18 @@ export const useSignupMutation = () =>
                 })
             ).data,
     })
+
+
+export const useUpdateContactMutation = () =>
+    useMutation({
+        mutationFn: async ({
+                               _id,
+                               number,name,email,gender
+                           }: ContactResponse) =>
+            (
+                await apiClient.patch< ContactResponse>(
+                    `api/v1/contacts/${_id}`,
+                    {_id,name,number,email,gender}
+                )
+            ).data,
+    })

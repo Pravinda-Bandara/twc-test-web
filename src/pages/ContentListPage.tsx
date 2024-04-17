@@ -1,10 +1,17 @@
 
 import Logo from "../component/Logo.tsx";
 
-import {Gender, useDeleteContactMutation, useGetContactListQuery} from "../hooks/contactHooks.ts";
+import {
+    Gender,
+    useDeleteContactMutation,
+    useGetContactListQuery,
+    useUpdateContactMutation,
+} from "../hooks/contactHooks.ts";
 import {useContext, useEffect, useState} from "react";
 import {Store} from "../Store.tsx";
 import {useNavigate} from "react-router-dom";
+import {toast} from "react-toastify";
+import {ApiError, getError} from "../utils/ErrorUtil.ts";
 
 
 export function ContactListPage() {
@@ -21,6 +28,9 @@ export function ContactListPage() {
     const [genderEdit, setGenderEdit] = useState('')
     const [emailEdit, setEmailEdit] = useState('')
     const [numberEdit, setNumberEdit] = useState('')
+
+    const { mutateAsync: updateUser, isPending: loadingUpdate } =
+        useUpdateContactMutation()
 
     const handleEdit = (rowId: string, name: string, gender: Gender, email: string, number: string) => {
         setNameEdit(name)
@@ -53,6 +63,24 @@ export function ContactListPage() {
             console.error("Error deleting contact:", error);
         }
     };
+
+    async function handleSaveEdit() {
+        console.log(editRow)
+        try {
+            await updateUser({
+                _id: editRow!,
+                name: nameEdit,
+                email: emailEdit,
+                gender: genderEdit,
+                number: numberEdit
+            });
+            toast.success('User updated successfully');
+        } catch (err) {
+            toast.error(getError(err as unknown as ApiError));
+        }
+        setEditRow('');
+        refetch();
+    }
 
     return (
         <>
@@ -89,13 +117,13 @@ export function ContactListPage() {
                                             </div>
                                         </td>
                                         {editRow==contact._id? <>
-                                            <td ><input className="text-center"  onChange={(e) => setNameEdit(e.target.value)} value={nameEdit} type="text"/></td>
-                                            <td ><input className="text-center" onChange={(e) => setGenderEdit(e.target.value)}  value={genderEdit} type="text"/></td>
-                                            <td ><input className="text-center" onChange={(e) => setEmailEdit(e.target.value)}  value={emailEdit} type="text"/></td>
-                                            <td ><input className="text-center" onChange={(e) => setNumberEdit(e.target.value)}  value={numberEdit} type="text"/></td>
-                                            <td><button>Save</button></td>
+                                            <td ><input className="text-center bg-slate-300"  onChange={(e) => setNameEdit(e.target.value)} value={nameEdit} type="text"/></td>
+                                            <td ><input className="text-center bg-slate-300" onChange={(e) => setGenderEdit(e.target.value)}  value={genderEdit} type="text"/></td>
+                                            <td ><input className="text-center bg-slate-300" onChange={(e) => setEmailEdit(e.target.value)}  value={emailEdit} type="text"/></td>
+                                            <td ><input className="text-center bg-slate-300" onChange={(e) => setNumberEdit(e.target.value)}  value={numberEdit} type="text"/></td>
+                                            <td><button onClick={()=>handleSaveEdit()}>Save</button></td>
                                         </> : <>
-                                            <td ><input className="text-center" disabled={false} value={contact.name} type="text"/></td>
+                                            <td ><input className="text-center"  disabled={false} value={contact.name} type="text"/></td>
                                             <td ><input className="text-center" disabled={false} value={contact.gender} type="text"/></td>
                                             <td ><input className="text-center" disabled={false} value={contact.email} type="text"/></td>
                                             <td ><input className="text-center" disabled={false} value={contact.number} type="text"/></td>
