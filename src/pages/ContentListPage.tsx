@@ -17,16 +17,16 @@ export function ContactListPage() {
     const {state, dispatch} = useContext(Store)
     const [editRow, setEditRow] = useState('')
 
-    const [nameE, setName] = useState('');
-    const [genderE, setGender] = useState('')
-    const [emailE, setEmail] = useState('')
-    const [numberE, setNumber] = useState('')
+    const [nameEdit, setNameEdit] = useState('');
+    const [genderEdit, setGenderEdit] = useState('')
+    const [emailEdit, setEmailEdit] = useState('')
+    const [numberEdit, setNumberEdit] = useState('')
 
     const handleEdit = (rowId: string, name: string, gender: Gender, email: string, number: string) => {
-        setName(name)
-        setGender(gender)
-        setEmail(email)
-        setNumber(number)
+        setNameEdit(name)
+        setGenderEdit(gender)
+        setEmailEdit(email)
+        setNumberEdit(number)
         setEditRow(rowId)
     };
 
@@ -68,39 +68,38 @@ export function ContactListPage() {
                             <table>
                                 <thead >
                                 <tr className="text-center">
-                                    <th className="py-2 px-4">Profile Pic</th>
-                                    <th className="py-2 px-4">Full Name</th>
-                                    <th className="py-2 px-4">Gender</th>
-                                    <th className="py-2 px-4">Email</th>
-                                    <th className="py-2 px-4">Phone Number</th>
-                                    <th className="py-2 px-4">Actions</th>
+                                    <th >Profile Pic</th>
+                                    <th >Full Name</th>
+                                    <th >Gender</th>
+                                    <th >Email</th>
+                                    <th >Phone Number</th>
+                                    <th >Actions</th>
                                 </tr>
                                 </thead>
                                 <tbody>
                                 {contacts?.map((contact) => (
-                                    <tr key={contact._id} className="text-center">
-                                        <td className="py-2 px-4">
+                                    <tr  key={contact._id} className="text-center">
+                                        <td className="w-1/6">
                                             <div className="flex justify-center">
                                                 {contact.gender == 'male' ?
                                                     <img className="rounded-full h-12 w-12" src="/src/assets/react.svg"
                                                          alt="Profile"/> :
                                                     <img className="rounded-full h-12 w-12" src="/src/assets/Logo.png"
                                                          alt="Profile"/>}
-
                                             </div>
                                         </td>
                                         {editRow==contact._id? <>
-                                            <td className="py-2 px-4"><input onChange={(e) => setName(e.target.value)} value={nameE} type="text"/></td>
-                                            <td className="py-2 px-4"><input onChange={(e) => setGender(e.target.value)}  value={genderE} type="text"/></td>
-                                            <td className="py-2 px-4"><input onChange={(e) => setEmail(e.target.value)}  value={emailE} type="text"/></td>
-                                            <td className="py-2 px-4"><input onChange={(e) => setNumber(e.target.value)}  value={numberE} type="text"/></td>
-                                            <button className="py-2 px-4">Save</button>
+                                            <td ><input className="text-center"  onChange={(e) => setNameEdit(e.target.value)} value={nameEdit} type="text"/></td>
+                                            <td ><input className="text-center" onChange={(e) => setGenderEdit(e.target.value)}  value={genderEdit} type="text"/></td>
+                                            <td ><input className="text-center" onChange={(e) => setEmailEdit(e.target.value)}  value={emailEdit} type="text"/></td>
+                                            <td ><input className="text-center" onChange={(e) => setNumberEdit(e.target.value)}  value={numberEdit} type="text"/></td>
+                                            <td><button>Save</button></td>
                                         </> : <>
-                                            <td className="py-2 px-4">{contact.name}</td>
-                                            <td className="py-2 px-4">{contact.gender}</td>
-                                            <td className="py-2 px-4">{contact.email}</td>
-                                            <td className="py-2 px-4">{contact.number}</td>
-                                            <td className="py-2 px-4">
+                                            <td ><input className="text-center" disabled={false} value={contact.name} type="text"/></td>
+                                            <td ><input className="text-center" disabled={false} value={contact.gender} type="text"/></td>
+                                            <td ><input className="text-center" disabled={false} value={contact.email} type="text"/></td>
+                                            <td ><input className="text-center" disabled={false} value={contact.number} type="text"/></td>
+                                            <td >
                         <span role="img"
                               aria-label="Edit"
                               className="cursor-pointer m-0.5"
