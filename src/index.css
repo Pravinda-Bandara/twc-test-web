@@ -5,3 +5,11 @@
 :root{
     font-size: 1.3rem;
 }
+input{
+    width: 10rem;
+    text-align: center;
+    outline: 2px solid transparent;
+    outline-offset: 2px;
+    padding: 0.4rem 0px;
+    margin: 0 9px;
+}
