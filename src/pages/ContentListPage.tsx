@@ -110,23 +110,23 @@ export function ContactListPage() {
                                         <td className="w-1/6">
                                             <div className="flex justify-center">
                                                 {contact.gender == 'male' ?
-                                                    <img className="rounded-full h-12 w-12" src="/src/assets/react.svg"
+                                                    <img className="rounded-full h-12 w-12" src="/src/assets/maleProPic.png"
                                                          alt="Profile"/> :
-                                                    <img className="rounded-full h-12 w-12" src="/src/assets/Logo.png"
+                                                    <img className="rounded-full h-12 w-12" src="/src/assets/femaleProPic.png"
                                                          alt="Profile"/>}
                                             </div>
                                         </td>
                                         {editRow==contact._id? <>
-                                            <td ><input className="text-center bg-slate-300"  onChange={(e) => setNameEdit(e.target.value)} value={nameEdit} type="text"/></td>
-                                            <td ><input className="text-center bg-slate-300" onChange={(e) => setGenderEdit(e.target.value)}  value={genderEdit} type="text"/></td>
-                                            <td ><input className="text-center bg-slate-300" onChange={(e) => setEmailEdit(e.target.value)}  value={emailEdit} type="text"/></td>
-                                            <td ><input className="text-center bg-slate-300" onChange={(e) => setNumberEdit(e.target.value)}  value={numberEdit} type="text"/></td>
+                                            <td ><input className="text-center bg-blue-300"  onChange={(e) => setNameEdit(e.target.value)} value={nameEdit} type="text"/></td>
+                                            <td ><input className="text-center bg-blue-300" onChange={(e) => setGenderEdit(e.target.value)}  value={genderEdit} type="text"/></td>
+                                            <td ><input className="text-center bg-blue-300" onChange={(e) => setEmailEdit(e.target.value)}  value={emailEdit} type="text"/></td>
+                                            <td ><input className="text-center bg-blue-300" onChange={(e) => setNumberEdit(e.target.value)}  value={numberEdit} type="text"/></td>
                                             <td><button onClick={()=>handleSaveEdit()}>Save</button></td>
                                         </> : <>
-                                            <td ><input className="text-center"  disabled={false} value={contact.name} type="text"/></td>
-                                            <td ><input className="text-center" disabled={false} value={contact.gender} type="text"/></td>
-                                            <td ><input className="text-center" disabled={false} value={contact.email} type="text"/></td>
-                                            <td ><input className="text-center" disabled={false} value={contact.number} type="text"/></td>
+                                            <td ><input className="text-center outline-none"  disabled={false} value={contact.name} type="text"/></td>
+                                            <td ><input className="text-center outline-none" disabled={false} value={contact.gender} type="text"/></td>
+                                            <td ><input className="text-center outline-none" disabled={false} value={contact.email} type="text"/></td>
+                                            <td ><input className="text-center outline-none" disabled={false} value={contact.number} type="text"/></td>
                                             <td >
                         <span role="img"
                               aria-label="Edit"
