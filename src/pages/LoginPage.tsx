@@ -11,8 +11,8 @@ export function LoginPage() {
     const navigate = useNavigate()
     const redirect ='/contacts'
     const { mutateAsync: login ,isPending} = useLoginMutation();
-    const [userName, setuserName] = useState('');
-    const [userPassword, setuserPassword] = useState('');
+    const [userName, setUserName] = useState('');
+    const [userPassword, setUserPassword] = useState('');
 
 
 
@@ -44,42 +44,41 @@ export function LoginPage() {
     return (
         <div className="flex justify-evenly items-center h-screen">
             <div >
-                <h1 className="text-3xl font-bold">Hi there,</h1>
-                <p>Welcome to our contacts portal</p>
+                <h1 className="text-5xl font-bold text-white mb-4">Hi there,</h1>
+                <p className="text-white text-2xl mb-10">Welcome to our <br/> contacts portal</p>
                 <form onSubmit={handleLogin}>
                     <div>
                         <input
                             type="email"
                             value={userName}
-                            onChange={(e) => setuserName(e.target.value)}
+                            onChange={(e) => setUserName(e.target.value)}
                             placeholder="e-mail"
                             required
-                            className="border-black border-2 rounded-3xl h-10
-                                p-5 my-2"
+                            className="rounded-3xl h-10 py-6 px-8 my-2 mr-5 text-customBlue w-96 placeholder-customBlue"
                         />
                     </div>
                     <div>
                         <input
                             type="password"
                             value={userPassword}
-                            onChange={(e) => setuserPassword(e.target.value)}
+                            onChange={(e) => setUserPassword(e.target.value)}
                             placeholder="password"
                             required
-                            className="border-black border-2 rounded-3xl h-10
-                                p-5 my-2"
+                            className="rounded-3xl h-10 py-6 px-8 my-2 mr-5 text-customBlue w-96 placeholder-customBlue"
                         />
                     </div>
 
 
-                    <button type="submit" disabled={isPending}>Login</button>
-                    <span> or </span>
-                    <button className="underline" type="button" onClick={()=>navigate("/register")}>Click here to Register</button>
+                    <button type="submit" disabled={isPending} className="px-6 w-1/4 my-10 py-2 rounded bg-customBlue text-white border
+                                rounded-2xl border-white hover:bg-white hover:text-customBlue hover:border-customBlue">Login</button>
+                    <span className="text-white mx-5"> or </span>
+                    <button className="underline text-white" type="button" onClick={()=>navigate("/register")}>Click here to Register</button>
 
 
                 </form>
             </div>
             <div className="flex items-center">
-                <Logo textColor="text-black-500"/>
+                <Logo textColor="text-white"/>
             </div>
         </div>
     );

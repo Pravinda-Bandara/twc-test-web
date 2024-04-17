@@ -11,7 +11,7 @@ import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
     return (
-        <div>
+        <div className="bg-customBlue">
             <ToastContainer />
             <main className="container mx-auto px-12">
                 <Outlet/>

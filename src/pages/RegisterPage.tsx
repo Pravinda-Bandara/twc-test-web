@@ -63,7 +63,7 @@ export function RegisterPage() {
         <>
             <div className="flex justify-evenly items-center h-screen">
                 <div>
-                    <h1 className="font-bold text-3xl my-5">Register Now!</h1>
+                    <h1 className="font-bold text-5xl my-5 my-10 text-white">Register Now!</h1>
                     <form onSubmit={handleRegister}>
                         <div>
                             <input
@@ -72,8 +72,7 @@ export function RegisterPage() {
                                 value={userName}
                                 onChange={(e) => setuserName(e.target.value)}
                                 required
-                                className="border-black border-2 rounded-3xl h-10
-                                p-5 my-2"
+                                className="rounded-3xl h-10 py-6 px-8 my-2 mr-5 text-customBlue w-96 placeholder-customBlue"
                             />
                         </div>
                         <div>
@@ -83,8 +82,7 @@ export function RegisterPage() {
                                 value={userPassword}
                                 onChange={(e) => setuserPassword(e.target.value)}
                                 required
-                                className="border-black border-2 rounded-3xl h-10
-                                p-5 my-2"
+                                className="rounded-3xl h-10 py-6 px-8 my-2 mr-5 text-customBlue w-96 placeholder-customBlue"
                             />
                         </div>
                         <div>
@@ -94,25 +92,25 @@ export function RegisterPage() {
                                 value={confirmPassword}
                                 onChange={(e) => setConfirmPassword(e.target.value)}
                                 required
-                                className="border-black border-2 rounded-3xl h-10
-                                p-5 my-2"
+                                className="rounded-3xl h-10 py-6 px-8 my-2 mr-5 text-customBlue w-96 placeholder-customBlue"
                             />
                         </div>
 
                         <div>
-                            <button type="submit" disabled={isPending}>Register</button>
+                            <button  type="submit" disabled={isPending} className="px-6 w-1/4 my-10 py-2 rounded bg-customBlue text-white border
+                                rounded-2xl border-white hover:bg-white hover:text-customBlue hover:border-customBlue">Register</button>
                         </div>
                     </form>
 
                     <div>
-                        <button className="underline" type="button" onClick={()=>navigate("/login")}>&lt; Back To Login
+                        <button className="underline text-white text-lg" type="button" onClick={()=>navigate("/login")}>&lt; Back To Login
                         </button>
                     </div>
                 </div>
 
 
                 <div className="flex items-center">
-                    <Logo textColor="text-black-500"/>
+                    <Logo textColor="text-white"/>
                 </div>
             </div>
 

@@ -15,6 +15,7 @@ const queryClient = new QueryClient();
 const router = createBrowserRouter(
     createRoutesFromElements(
         <Route path="/" element={<App/>}>
+            <Route index={true} element={<LoginPage/>}/>
             <Route path="login" element={<LoginPage/>}/>
             <Route path="register" element={<RegisterPage/>}/>
             <Route path="addcontact" element={<NewContentPage/>}/>

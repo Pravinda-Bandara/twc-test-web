@@ -20,7 +20,7 @@ export function NewContentPage() {
         event.preventDefault();
 
         try {
-            const newUser = await signupMutation.mutateAsync({
+            await signupMutation.mutateAsync({
                 user: userID!,
                 name: fullName,
                 number: phoneNumber,
@@ -48,10 +48,11 @@ export function NewContentPage() {
 
     return (
         <>
-            <div className="flex justify-evenly items-center h-screen">
+            <div className="flex justify-evenly items-center h-screen flex-col">
                 <div>
-                    <Logo textColor="text-black-500" />
-                    <h1 className="text-3xl font-bold py-10">New Content</h1>
+                    <Logo textColor="text-white"/>
+
+                    <h1 className="text-4xl text-white font-bold py-10">New Content</h1>
                     <form onSubmit={handleAddContent} className="grid grid-cols-2 gap-4 items-center">
                         <div>
                             <input
@@ -60,7 +61,8 @@ export function NewContentPage() {
                                 onChange={(e) => setFullName(e.target.value)}
                                 placeholder="full name"
                                 required
-                                className="border-black border-2 rounded-3xl h-10 p-5 my-2"
+                                className="rounded-3xl h-10 py-6 px-8 my-2 mr-5 text-customBlue w-96 placeholder-customBlue"
+
                             />
                         </div>
                         <div>
@@ -70,7 +72,7 @@ export function NewContentPage() {
                                 onChange={(e) => setEmail(e.target.value)}
                                 placeholder="e-mail"
                                 required
-                                className="border-black border-2 rounded-3xl h-10 p-5 my-2"
+                                className="rounded-3xl h-10 py-6 px-8 my-2  text-customBlue w-96 placeholder-customBlue"
                             />
                         </div>
                         <div>
@@ -80,11 +82,11 @@ export function NewContentPage() {
                                 onChange={(e) => setPhoneNumber(e.target.value)}
                                 placeholder="phone number"
                                 required
-                                className="border-black border-2 rounded-3xl h-10 p-5 my-2"
+                                className="rounded-3xl h-10 py-6 px-8 my-2 mr-5 text-customBlue w-96 placeholder-customBlue"
                             />
                         </div>
                         <div className="flex justify-between">
-                            <label>Gender:</label>
+                            <label className="text-white">Gender:</label>
                             <div>
                                 <input
                                     type="radio"
@@ -94,8 +96,9 @@ export function NewContentPage() {
                                     checked={gender === 'male'}
                                     onChange={() => setGender('male')}
                                     required
+
                                 />
-                                <label htmlFor="male">Male</label>
+                                <label htmlFor="male" className="text-white px-2">Male</label>
                             </div>
                             <div>
                                 <input
@@ -107,16 +110,26 @@ export function NewContentPage() {
                                     onChange={() => setGender('female')}
                                     required
                                 />
-                                <label htmlFor="female">Female</label>
+                                <label htmlFor="female" className="text-white px-2">Female</label>
                             </div>
                         </div>
-                        <button type="submit" >
-                            add contact
+                        <button type="submit"
+                                className="px-6 w-3/5 my-10 py-2 rounded bg-customBlue text-white border
+                                rounded-2xl border-white hover:bg-white hover:text-customBlue hover:border-customBlue"
+                        >
+                            Add Contact
                         </button>
                     </form>
-                    <button className="underline float-end" type="button" onClick={() => handleLogOut()}> LogOut
+                </div>
+                <div className="self-end">
+                    <button className="underline float-end text-white mx-5 text-xl" type="button"
+                            onClick={() => handleLogOut()}> LogOut
+                    </button>
+                    <button className="underline float-end text-white text-xl" type="button"
+                            onClick={() => navigate("/contacts")}> Show My Contact
                     </button>
                 </div>
+
             </div>
         </>
     );
