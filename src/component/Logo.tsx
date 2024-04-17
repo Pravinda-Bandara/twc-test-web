@@ -2,25 +2,25 @@ import React from 'react';
 
 type LogoProps = {
     textColor: string;
+    imageSize: string;
+    textSize: string;
 };
 
-const Logo: React.FC<LogoProps> = ({ textColor }) => {
+const Logo: React.FC<LogoProps> = ({ textColor, imageSize, textSize }) => {
     return (
         <>
             <div>
                 <div className="flex justify-start items-center">
-                    <img src="src/assets/Logo.png" alt="" className="mr-2 w-10"/>
-                    <span className={`${textColor} text-3xl font-bold`}>twc</span>
+                    <img src="src/assets/Logo.png" alt="" className={`mr-2 ${imageSize}`}/>
+                    <span className={`${textColor} ${textSize}  `}>twc</span>
                 </div>
 
                 <div>
-                    <p className={`${textColor} font-extrabold text-3xl`}>contacts</p>
-                    <p className={`${textColor} text-3xl`}>portal</p>
+                    <p className={`${textColor} font-extrabold ${textSize}`}>contacts</p>
+                    <p className={`${textColor} ${textSize}`}>portal</p>
                 </div>
             </div>
-
         </>
-
     );
 };
 

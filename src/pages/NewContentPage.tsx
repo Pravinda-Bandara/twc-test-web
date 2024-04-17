@@ -3,6 +3,8 @@ import Logo from "../component/Logo.tsx";
 import { Store } from "../Store.tsx";
 import {Gender, useSignupMutation} from "../hooks/contactHooks.ts";
 import {useNavigate} from "react-router-dom";
+import {toast} from "react-toastify";
+import {ApiError, getError} from "../utils/ErrorUtil.ts";
 
 export function NewContentPage() {
     const navigate = useNavigate()
@@ -28,8 +30,10 @@ export function NewContentPage() {
                 email: email,
                 gender: gender as Gender
             });
-        } catch (error) {
-            console.error('Error adding new user:', error);
+        } catch (err) {
+            toast.error(getError(err as ApiError),{
+                autoClose:1000
+            })
         }
         setFullName('');
         setEmail('');
@@ -51,7 +55,7 @@ export function NewContentPage() {
         <>
             <div className="flex justify-evenly items-center h-screen flex-col">
                 <div>
-                    <Logo textColor="text-white"/>
+                    <Logo textColor="text-white" imageSize="w-10" textSize="text-3xl" />
 
                     <h1 className="text-4xl text-white font-bold py-10">New Content</h1>
                     <form onSubmit={handleAddContent} className="grid grid-cols-2 gap-4 items-center">
@@ -62,7 +66,7 @@ export function NewContentPage() {
                                 onChange={(e) => setFullName(e.target.value)}
                                 placeholder="full name"
                                 required
-                                className="rounded-3xl h-10 py-6 px-8 my-2 mr-5 text-customBlue w-96 placeholder-customBlue"
+                                className="rounded-3xl h-10 py-6 px-8 my-2 mr-5 text-customBlue w-11/12 placeholder-customBlue"
 
                             />
                         </div>
@@ -73,7 +77,7 @@ export function NewContentPage() {
                                 onChange={(e) => setEmail(e.target.value)}
                                 placeholder="e-mail"
                                 required
-                                className="rounded-3xl h-10 py-6 px-8 my-2  text-customBlue w-96 placeholder-customBlue"
+                                className="rounded-3xl h-10 py-6 px-8 my-2  text-customBlue w-11/12  placeholder-customBlue"
                             />
                         </div>
                         <div>
@@ -83,11 +87,11 @@ export function NewContentPage() {
                                 onChange={(e) => setPhoneNumber(e.target.value)}
                                 placeholder="phone number"
                                 required
-                                className="rounded-3xl h-10 py-6 px-8 my-2 mr-5 text-customBlue w-96 placeholder-customBlue"
+                                className="rounded-3xl h-10 py-6 px-8 my-2 mr-5 text-customBlue w-11/12  placeholder-customBlue"
                             />
                         </div>
-                        <div className="flex justify-between">
-                            <label className="text-white">Gender:</label>
+                        <div className="flex px-4">
+                            <label className="text-white mr-10">Gender:</label>
                             <div>
                                 <input
                                     type="radio"
@@ -97,9 +101,10 @@ export function NewContentPage() {
                                     checked={gender === 'male'}
                                     onChange={() => setGender('male')}
                                     required
+                                    className="w-3"
 
                                 />
-                                <label htmlFor="male" className="text-white px-2">Male</label>
+                                <label htmlFor="male" className="text-white px-1 pr-14">Male</label>
                             </div>
                             <div>
                                 <input
@@ -110,13 +115,13 @@ export function NewContentPage() {
                                     checked={gender === 'female'}
                                     onChange={() => setGender('female')}
                                     required
+                                    className="w-3"
                                 />
-                                <label htmlFor="female" className="text-white px-2">Female</label>
+                                <label htmlFor="female" className="text-white px-1">Female</label>
                             </div>
                         </div>
                         <button type="submit"
-                                className="px-6 w-3/5 my-10 py-2 rounded bg-customBlue text-white border
-                                rounded-2xl border-white hover:bg-white hover:text-customBlue hover:border-customBlue"
+                                className="custom-button w-3/5"
                         >
                             Add Contact
                         </button>

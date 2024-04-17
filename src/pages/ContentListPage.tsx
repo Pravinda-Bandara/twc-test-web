@@ -19,29 +19,29 @@ export function ContactListPage() {
     const navigate = useNavigate()
     const redirect ='/login'
     const addNewContact ='/addcontact'
+
     const { data:contacts,refetch} = useGetContactListQuery();
     const { mutateAsync: deleteContact } = useDeleteContactMutation();
-    const {state, dispatch} = useContext(Store)
-    const [editRow, setEditRow] = useState('')
+    const { mutateAsync: updateUser} = useUpdateContactMutation()
 
+    const {state, dispatch} = useContext(Store)
+
+    const [editRow, setEditRow] = useState('')
     const [nameEdit, setNameEdit] = useState('');
     const [genderEdit, setGenderEdit] = useState('')
     const [emailEdit, setEmailEdit] = useState('')
     const [numberEdit, setNumberEdit] = useState('')
 
-    const { mutateAsync: updateUser, isPending: loadingUpdate } =
-        useUpdateContactMutation()
 
-   /* const contactsAmount:number= contacts?.length*/
 
     useEffect(() => {
         if (state.userInfo === null ) {
             navigate(redirect);
-        }
-        /*if (contactsAmount==0){
+        }if (contacts?.length==0){
             navigate("/welcome")
-        }*/
-    }, [state.userInfo, navigate]);
+        }
+    }, [state.userInfo, navigate,contacts]);
+
     const handleEdit = (rowId: string, name: string, gender: Gender, email: string, number: string) => {
         setNameEdit(name)
         setGenderEdit(gender)
@@ -50,28 +50,21 @@ export function ContactListPage() {
         setEditRow(rowId)
     };
 
-
     const handleLogOut = () => {
         dispatch({ type: 'USER_SIGNOUT' })
         localStorage.removeItem('userInfo')
         navigate(redirect)
     };
-    if (state.userInfo==null){
-        navigate(redirect)
-    }
-
 
     const handleDelete = async (contactId:string) => {
         try {
             await deleteContact(contactId);
             refetch();
-        } catch (error) {
-            console.error("Error deleting contact:", error);
+        } catch (err) {
+            toast.error(getError(err as unknown as ApiError));
         }
     };
-
     async function handleSaveEdit() {
-        console.log(editRow)
         try {
             await updateUser({
                 _id: editRow!,
@@ -80,7 +73,6 @@ export function ContactListPage() {
                 gender: genderEdit,
                 number: numberEdit
             });
-            toast.success('User updated successfully');
         } catch (err) {
             toast.error(getError(err as unknown as ApiError));
         }
@@ -88,17 +80,17 @@ export function ContactListPage() {
         refetch();
     }
 
+
     return (
         <>
             <div className="flex justify-center items-center h-screen flex-col">
                 <div>
-                    <Logo textColor="text-white"/>
+                    <Logo textColor="text-white" imageSize="w-10" textSize="text-3xl" />
                     <div>
                         <div className="flex items-center justify-between">
                             <h1 className="font-bold text-3xl text-white">Contact</h1>
 
-                            <button type="button" className="px-6 w-1/5 my-10 py-2 rounded bg-customBlue text-white border
-                                rounded-2xl border-white hover:bg-white hover:text-customBlue hover:border-customBlue"
+                            <button type="button" className="custom-button w-1/4"
                                     onClick={() => navigate(addNewContact)}>add new contest
                             </button>
 
@@ -111,7 +103,7 @@ export function ContactListPage() {
                                     <th>Full Name</th>
                                     <th>Gender</th>
                                     <th>Email</th>
-                                    <th>Phone Number</th>
+                                    <th>Number</th>
                                     <th>Actions</th>
                                 </tr>
                                 </thead>
@@ -130,34 +122,32 @@ export function ContactListPage() {
                                             </div>
                                         </td>
                                         {editRow == contact._id ? <>
-                                            <td><input className="bg-blue-100"
+                                            <td><input className="bg-blue-100 nameInput"
                                                        onChange={(e) => setNameEdit(e.target.value)} value={nameEdit}
                                                        type="text"/></td>
-                                            <td><input className="bg-blue-100"
+                                            <td><input className="bg-blue-100 genderInput"
                                                        onChange={(e) => setGenderEdit(e.target.value)}
                                                        value={genderEdit} type="text"/></td>
-                                            <td><input className="bg-blue-100"
+                                            <td><input className="bg-blue-100 emailInput"
                                                        onChange={(e) => setEmailEdit(e.target.value)} value={emailEdit}
                                                        type="text"/></td>
-                                            <td><input className="bg-blue-100"
+                                            <td><input className="bg-blue-100 numberInput"
                                                        onChange={(e) => setNumberEdit(e.target.value)}
                                                        value={numberEdit} type="text"/></td>
                                             <td>
-                                                <button className="px-4 py-2 rounded bg-customBlue
-                                                text-white border rounded-2xl border-white hover:bg-white
-                                                hover:text-customBlue hover:border-customBlue"
+                                                <button className="w-max px-2 m-0 custom-button"
                                                         onClick={() => handleSaveEdit()}>Save
                                                 </button>
                                             </td>
                                         </> : <>
                                             <td><input  disabled={false}
-                                                       value={contact.name} type="text"/></td>
+                                                       value={contact.name} type="text" className="nameInput" /></td>
                                             <td><input  disabled={false}
-                                                       value={contact.gender} type="text"/></td>
+                                                       value={contact.gender} className="genderInput" type="text"/></td>
                                             <td><input  disabled={false}
-                                                       value={contact.email} type="text"/></td>
+                                                       value={contact.email} type="text" className="emailInput" /></td>
                                             <td><input disabled={false}
-                                                       value={contact.number} type="text"/></td>
+                                                       value={contact.number} type="text" className="numberInput" /></td>
                                             <td>
                         <span role="img"
                               aria-label="Edit"

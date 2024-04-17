@@ -2,14 +2,39 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer components {
+    .custom-button {
+        @apply px-6 w-1/5 my-10 py-2 rounded bg-customBlue text-white border rounded-2xl border-white hover:bg-white hover:text-customBlue hover:border-customBlue;
+    }
+}
 :root{
     font-size: 1.3rem;
 }
 input{
     width: 10rem;
-    text-align: center;
+    text-align: left;
     outline: 2px solid transparent;
     outline-offset: 2px;
-    padding: 0.4rem 0px;
-    margin: 0 9px;
+    padding: 0.5rem 0px;
+
+}
+.genderInput{
+    width: 4rem;
+    text-align: center;
+    margin: 0 0.5rem;
+}
+.nameInput{
+    width: 8rem;
+    text-align: center;
+    margin: 0 0.5rem;
+}
+.emailInput{
+    width: 12rem;
+    text-align: center;
+    margin: 0 0.5rem;
+}
+.numberInput{
+    width: 6rem;
+    text-align: center;
+    margin: 0 0.5rem;
 }

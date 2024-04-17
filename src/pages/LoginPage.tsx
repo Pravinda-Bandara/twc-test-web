@@ -69,8 +69,7 @@ export function LoginPage() {
                     </div>
 
 
-                    <button type="submit" disabled={isPending} className="px-6 w-1/4 my-10 py-2 rounded bg-customBlue text-white border
-                                rounded-2xl border-white hover:bg-white hover:text-customBlue hover:border-customBlue">Login</button>
+                    <button type="submit" disabled={isPending} className="custom-button w-1/4">Login</button>
                     <span className="text-white mx-5"> or </span>
                     <button className="underline text-white text-lg" type="button" onClick={()=>navigate("/register")}>Click here to Register</button>
 
@@ -78,7 +77,7 @@ export function LoginPage() {
                 </form>
             </div>
             <div className="flex items-center">
-                <Logo textColor="text-white"/>
+                <Logo textColor="text-white" imageSize="w-20" textSize="text-5xl" />
             </div>
         </div>
     );
