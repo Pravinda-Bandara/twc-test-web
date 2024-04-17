@@ -13,7 +13,7 @@ function App() {
     return (
         <div className="bg-customBlue">
             <ToastContainer />
-            <main className="container mx-auto px-12">
+            <main className="container mx-auto px-6">
                 <Outlet/>
             </main>
         </div>

@@ -7,12 +7,13 @@ import {useNavigate} from "react-router-dom";
 export function NewContentPage() {
     const navigate = useNavigate()
     const redirect ='/login'
+    const { state, dispatch } = useContext(Store);
     const [fullName, setFullName] = useState('');
     const [email, setEmail] = useState('');
     const [phoneNumber, setPhoneNumber] = useState('');
     const [gender, setGender] = useState('');
 
-    const { state, dispatch } = useContext(Store);
+
     const userID: string|undefined = state.userInfo;
     const signupMutation = useSignupMutation();
 
@@ -126,7 +127,7 @@ export function NewContentPage() {
                             onClick={() => handleLogOut()}> LogOut
                     </button>
                     <button className="underline float-end text-white text-xl" type="button"
-                            onClick={() => navigate("/contacts")}> Show My Contact
+                            onClick={() => navigate("/contacts")}> Show My Contacts
                     </button>
                 </div>
 

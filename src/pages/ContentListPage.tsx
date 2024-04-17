@@ -90,7 +90,10 @@ export function ContactListPage() {
                     <div>
                         <div className="flex items-center justify-between">
                             <h1 className="font-bold text-3xl ">Contact</h1>
-                            <button type="button" onClick={()=>navigate(addNewContact)}>add new contest</button>
+
+                            <button type="button" className="px-6 w-3/5 my-10 py-2 rounded bg-customBlue text-white border
+                                rounded-2xl border-white hover:bg-white hover:text-customBlue hover:border-customBlue"
+                                    onClick={()=>navigate(addNewContact)}>add new contest</button>
                         </div>
                         <div className="rounded-3xl border-2 p-5 flex justify-center">
                             <table>
