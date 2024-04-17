@@ -1,8 +1,8 @@
 
 import Logo from "../component/Logo.tsx";
 
-import {useDeleteContactMutation, useGetContactListQuery} from "../hooks/contactHooks.ts";
-import {useContext, useEffect} from "react";
+import {Gender, useDeleteContactMutation, useGetContactListQuery} from "../hooks/contactHooks.ts";
+import {useContext, useEffect, useState} from "react";
 import {Store} from "../Store.tsx";
 import {useNavigate} from "react-router-dom";
 
@@ -15,9 +15,19 @@ export function ContactListPage() {
     const { data:contacts,refetch} = useGetContactListQuery();
     const { mutateAsync: deleteContact } = useDeleteContactMutation();
     const {state, dispatch} = useContext(Store)
-    console.log(state.userInfo);
-    const handleEdit = () => {
-        // Implement edit functionality
+    const [editRow, setEditRow] = useState('')
+
+    const [nameE, setName] = useState('');
+    const [genderE, setGender] = useState('')
+    const [emailE, setEmail] = useState('')
+    const [numberE, setNumber] = useState('')
+
+    const handleEdit = (rowId: string, name: string, gender: Gender, email: string, number: string) => {
+        setName(name)
+        setGender(gender)
+        setEmail(email)
+        setNumber(number)
+        setEditRow(rowId)
     };
 
 
@@ -71,39 +81,45 @@ export function ContactListPage() {
                                     <tr key={contact._id} className="text-center">
                                         <td className="py-2 px-4">
                                             <div className="flex justify-center">
-                                                <img className="rounded-full h-12 w-12" src="/src/assets/react.svg"
-                                                     alt="Profile"/>
+                                                {contact.gender == 'male' ?
+                                                    <img className="rounded-full h-12 w-12" src="/src/assets/react.svg"
+                                                         alt="Profile"/> :
+                                                    <img className="rounded-full h-12 w-12" src="/src/assets/Logo.png"
+                                                         alt="Profile"/>}
+
                                             </div>
                                         </td>
-                                        <td className="py-2 px-4">{contact.name}</td>
-                                        <td className="py-2 px-4">{contact.gender}</td>
-                                        <td className="py-2 px-4">{contact.email}</td>
-                                        <td className="py-2 px-4">{contact.number}</td>
-                                        <td className="py-2 px-4">
-                        <span
-                            role="img"
-                            aria-label="Edit"
-                            className="cursor-pointer m-0.5"
-                            onClick={() => handleEdit()}
-                        >
-                            ✏️
-                        </span>
-                                            <span
-                                                role="img"
-                                                aria-label="Delete"
-                                                className="cursor-pointer m-0.5"
-                                                onClick={() => handleDelete(contact._id)}
-                                            >
-                            🗑️
-                        </span>
-                                        </td>
+                                        {editRow==contact._id? <>
+                                            <td className="py-2 px-4"><input onChange={(e) => setName(e.target.value)} value={nameE} type="text"/></td>
+                                            <td className="py-2 px-4"><input onChange={(e) => setGender(e.target.value)}  value={genderE} type="text"/></td>
+                                            <td className="py-2 px-4"><input onChange={(e) => setEmail(e.target.value)}  value={emailE} type="text"/></td>
+                                            <td className="py-2 px-4"><input onChange={(e) => setNumber(e.target.value)}  value={numberE} type="text"/></td>
+                                            <button className="py-2 px-4">Save</button>
+                                        </> : <>
+                                            <td className="py-2 px-4">{contact.name}</td>
+                                            <td className="py-2 px-4">{contact.gender}</td>
+                                            <td className="py-2 px-4">{contact.email}</td>
+                                            <td className="py-2 px-4">{contact.number}</td>
+                                            <td className="py-2 px-4">
+                        <span role="img"
+                              aria-label="Edit"
+                              className="cursor-pointer m-0.5"
+                              onClick={() => handleEdit(contact._id,contact.name,contact.gender,contact.email,contact.number)}>✏️</span>
+                                                <span role="img"
+                                                      aria-label="Delete"
+                                                      className="cursor-pointer m-0.5"
+                                                      onClick={() => handleDelete(contact._id)}>🗑️</span>
+                                            </td>
+                                        </>}
+
+
                                     </tr>
                                 ))}
                                 </tbody>
                             </table>
                         </div>
                     </div>
-                    <button className="underline float-end" type="button" onClick={() =>handleLogOut()}> LogOut
+                    <button className="underline float-end" type="button" onClick={() => handleLogOut()}> LogOut
                     </button>
                 </div>
 

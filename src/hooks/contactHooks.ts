@@ -27,7 +27,7 @@ interface ContactRequest {
 }
 
 export interface ContactResponse {
-    _id: mongoose.Types.ObjectId | undefined ;
+    _id: mongoose.Types.ObjectId | undefined |string ;
     number: string;
     name: string;
     email: string;
