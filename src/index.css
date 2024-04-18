@@ -6,7 +6,12 @@
     .custom-button {
         @apply px-6 w-1/5 my-10 py-2 rounded bg-customBlue text-white border rounded-2xl border-white hover:bg-white hover:text-customBlue hover:border-customBlue;
     }
+
+    .custom-button-white {
+        @apply px-6 w-1/5 my-10 py-2 rounded bg-white text-customBlue border rounded-2xl border-customBlue hover:bg-customBlue hover:text-white hover:border-customBlue;
+    }
 }
+
 :root{
     font-size: 1.3rem;
 }
