@@ -9,6 +9,9 @@
     .custom-button-white {
         @apply px-6 w-1/5 my-10 py-2 rounded bg-white text-customBlue border rounded-2xl border-customBlue hover:bg-customBlue hover:text-white hover:border-customBlue;
     }
+    .custom-input{
+        @apply md:w-8/12 lg:w-10/12 xl:w-11/12 rounded-3xl h-10 py-6 px-8 my-2 mr-5 text-customBlue placeholder-customBlue
+    }
 }
 
 :root{
@@ -41,4 +44,25 @@ input{
     width: 6rem;
     text-align: center;
     margin: 0 0.5rem;
+}
+
+.bg-fixed-cover {
+    background-image: url('src/assets/bg-img-1.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    position: sticky;
+    top: 0;
+}
+
+.bg-fixed-cover-2 {
+    background-image: url('src/assets/bg-img-2.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
 }

@@ -58,8 +58,8 @@ export function NewContentPage() {
 
     return (
         <>
-            <div className="flex justify-evenly items-center h-screen flex-col">
-                <div>
+            <div className="flex justify-evenly items-center h-screen flex-col bg-fixed-cover p-20">
+                <div >
                     <Logo textColor="text-white" imageSize="w-10" textSize="text-3xl" />
 
                     <h1 className="text-4xl text-white font-bold py-10">New Content</h1>
@@ -129,7 +129,7 @@ export function NewContentPage() {
                         </button>
                     </form>
                 </div>
-                <div className="self-end">
+                <div className="self-end ">
                     <div className="self-end">
                         <div className="float-end flex flex-row-reverse">
 
@@ -145,7 +145,6 @@ export function NewContentPage() {
 
                         </div>
                     </div>
-
                 </div>
 
             </div>

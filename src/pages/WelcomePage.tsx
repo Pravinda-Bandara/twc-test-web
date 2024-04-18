@@ -20,8 +20,8 @@ export function WelcomePage() {
         }
     }, [state.userInfo, navigate,]);
     return (
-        <div className="flex justify-evenly items-center h-screen flex-col">
-            <div>
+        <div className="flex justify-evenly items-center h-screen flex-col bg-fixed-cover ">
+            <div className="p-10">
                 <Logo textColor="text-white" imageSize="w-10" textSize="text-3xl" />
                 <h1 className="font-bold text-4xl my-5 my-10 text-white mb-5 mt-14">Welcome</h1>
                 <p className="text-white text-3xl">This is where your contacts will live. Click the button below to add
@@ -29,9 +29,9 @@ export function WelcomePage() {
                 <button onClick={()=>navigate(addNewContact)} type="button" className="custom-button">Add First Contact
                 </button>
             </div>
-            <div className="self-end flex">
+            <div className="self-end flex mr-10">
                 <i className="bi bi-box-arrow-left text-2xl text-white"></i>
-                <button className="underline text-lg float-end text-white mx-2 text-xl" type="button"
+                <button className="underline text-lg float-end text-white mx-2 text-xl mb-10" type="button"
                         onClick={() => handleLogOut()}>LogOut
                 </button>
             </div>

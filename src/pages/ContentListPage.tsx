@@ -113,8 +113,8 @@ export function ContactListPage() {
     return (
         <>
 
-            <div className="flex justify-center items-center h-screen flex-col">
-                <div>
+            <div className="flex justify-center items-center h-screen flex-col bg-fixed-cover p-10">
+                <div >
                     <Logo textColor="text-white" imageSize="w-10" textSize="text-3xl" />
                     <div>
                         <div className="flex items-center justify-between">
@@ -137,7 +137,7 @@ export function ContactListPage() {
                                     <th>Actions</th>
                                 </tr>
                                 </thead>
-                                <tbody>
+                                <tbody >
                                 {contacts?.map((contact) => (
                                     <tr key={contact._id} className="text-center">
                                         <td className="w-1/6">
@@ -203,10 +203,10 @@ export function ContactListPage() {
                         </div>
                     </div>
                 </div>
-                <div className="self-end mb-10">
-                    <div className="float-end flex">
+                <div className="self-end ">
+                    <div className="float-end flex m-10">
                         <i className="bi bi-box-arrow-left text-2xl text-white" ></i>
-                        <button className="underline  text-white mx-2 text-xl" type="button"
+                        <button className="underline  text-white mx-2 text-xl " type="button"
                                 onClick={() => handleLogOut()}>LogOut
                         </button>
                     </div>

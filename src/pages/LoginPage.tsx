@@ -46,8 +46,8 @@ export function LoginPage() {
     }, [userInfo])
 
     return (
-        <div className="flex justify-evenly items-center h-screen">
-            <div >
+        <div className="flex justify-evenly items-center h-screen bg-fixed-cover-2">
+            <div className="p-10">
                 <h1 className="text-5xl font-bold text-white mb-4">Hi there,</h1>
                 <p className="text-white text-2xl mb-10">Welcome to our <br/> contacts portal</p>
                 <form onSubmit={handleLogin}>
@@ -57,7 +57,7 @@ export function LoginPage() {
                             value={userName}
                             onChange={(e) => setUserName(e.target.value)}
                             placeholder="e-mail"
-                            className="rounded-3xl h-10 py-6 px-8 my-2 mr-5 text-customBlue w-96 placeholder-customBlue"
+                            className="custom-input"
                         />
                     </div>
                     <div>
@@ -66,20 +66,20 @@ export function LoginPage() {
                             value={userPassword}
                             onChange={(e) => setUserPassword(e.target.value)}
                             placeholder="password"
-                            className="rounded-3xl h-10 py-6 px-8 my-2 mr-5 text-customBlue w-96 placeholder-customBlue"
+                            className="custom-input"
                         />
                     </div>
 
 
                     <button type="submit" disabled={isPending} className="custom-button w-1/4">Login</button>
                     <span className="text-white mx-5"> or </span>
-                    <button className="underline text-white text-lg" type="button" onClick={()=>navigate("/register")}>Click here to Register</button>
+                    <button className="underline text-white text-lg mr-7" type="button" onClick={()=>navigate("/register")}>Click here to Register</button>
 
 
                 </form>
             </div>
             <div className="flex items-center">
-                <Logo textColor="text-white" imageSize="w-20" textSize="text-5xl" />
+                <Logo textColor="text-black" imageSize="w-20" textSize="text-5xl" />
             </div>
         </div>
     );
