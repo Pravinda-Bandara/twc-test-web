@@ -13,6 +13,7 @@ import {toast} from "react-toastify";
 import {ApiError, getError} from "../utils/ErrorUtil.ts";
 import DeletePopUp from "../component/DeletePopUp.tsx";
 import SuccessPopUp from "../component/SuccessPopUp.tsx";
+import {UpdateValidationUtil} from "../utils/UpdateValidationUtil.ts";
 
 
 export function ContactListPage() {
@@ -87,6 +88,10 @@ export function ContactListPage() {
     };
 
     async function handleSaveEdit() {
+        const validationError = UpdateValidationUtil(nameEdit, numberEdit, emailEdit, genderEdit);
+        if (validationError) {
+            return;
+        }
         try {
             await updateUser({
                 _id: editRow!,
@@ -199,9 +204,9 @@ export function ContactListPage() {
                     </div>
                 </div>
                 <div className="self-end mb-10">
-                    <div className="float-end ">
-                        <i className="bi bi-box-arrow-left text-2xl text-white"></i>
-                        <button className="underline text-lg text-white mt-5 mx-2" type="button"
+                    <div className="float-end flex">
+                        <i className="bi bi-box-arrow-left text-2xl text-white" ></i>
+                        <button className="underline  text-white mx-2 text-xl" type="button"
                                 onClick={() => handleLogOut()}>LogOut
                         </button>
                     </div>

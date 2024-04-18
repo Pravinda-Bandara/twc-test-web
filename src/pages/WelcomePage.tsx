@@ -29,7 +29,7 @@ export function WelcomePage() {
                 <button onClick={()=>navigate(addNewContact)} type="button" className="custom-button">Add First Contact
                 </button>
             </div>
-            <div className="self-end">
+            <div className="self-end flex">
                 <i className="bi bi-box-arrow-left text-2xl text-white"></i>
                 <button className="underline text-lg float-end text-white mx-2 text-xl" type="button"
                         onClick={() => handleLogOut()}>LogOut

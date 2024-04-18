@@ -5,6 +5,7 @@ import {useNavigate} from "react-router-dom";
 import {toast} from "react-toastify";
 import {ApiError, getError} from "../utils/ErrorUtil.ts";
 import {Store} from "../Store.tsx";
+import {LoginValidationUtil} from "../utils/LoginValidationUtil.ts";
 
 
 export function LoginPage() {
@@ -21,6 +22,9 @@ export function LoginPage() {
 
     const handleLogin =async (event: FormEvent) => {
         event.preventDefault();
+        if (!LoginValidationUtil(userName, userPassword)) {
+            return;
+        }
         try {
             const data = await login({
                 userName,
@@ -49,11 +53,10 @@ export function LoginPage() {
                 <form onSubmit={handleLogin}>
                     <div>
                         <input
-                            type="email"
+                            type="text"
                             value={userName}
                             onChange={(e) => setUserName(e.target.value)}
                             placeholder="e-mail"
-                            required
                             className="rounded-3xl h-10 py-6 px-8 my-2 mr-5 text-customBlue w-96 placeholder-customBlue"
                         />
                     </div>
@@ -63,7 +66,6 @@ export function LoginPage() {
                             value={userPassword}
                             onChange={(e) => setUserPassword(e.target.value)}
                             placeholder="password"
-                            required
                             className="rounded-3xl h-10 py-6 px-8 my-2 mr-5 text-customBlue w-96 placeholder-customBlue"
                         />
                     </div>

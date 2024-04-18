@@ -5,6 +5,7 @@ import {Gender, useSignupMutation} from "../hooks/contactHooks.ts";
 import {useNavigate} from "react-router-dom";
 import {toast} from "react-toastify";
 import {ApiError, getError} from "../utils/ErrorUtil.ts";
+import {UpdateValidationUtil} from "../utils/UpdateValidationUtil.ts";
 
 export function NewContentPage() {
     const navigate = useNavigate()
@@ -23,6 +24,10 @@ export function NewContentPage() {
         event.preventDefault();
 
         try {
+            const validationError = UpdateValidationUtil(fullName, phoneNumber, email, gender);
+            if (validationError) {
+                return;
+            }
             await signupMutation.mutateAsync({
                 user: userID!,
                 name: fullName,
@@ -65,28 +70,25 @@ export function NewContentPage() {
                                 value={fullName}
                                 onChange={(e) => setFullName(e.target.value)}
                                 placeholder="full name"
-                                required
                                 className="rounded-3xl h-10 py-6 px-8 my-2 mr-5 text-customBlue w-11/12 placeholder-customBlue"
 
                             />
                         </div>
                         <div>
                             <input
-                                type="email"
+                                type="text"
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}
                                 placeholder="e-mail"
-                                required
                                 className="rounded-3xl h-10 py-6 px-8 my-2  text-customBlue w-11/12  placeholder-customBlue"
                             />
                         </div>
                         <div>
                             <input
-                                type="tel"
+                                type="text"
                                 value={phoneNumber}
                                 onChange={(e) => setPhoneNumber(e.target.value)}
                                 placeholder="phone number"
-                                required
                                 className="rounded-3xl h-10 py-6 px-8 my-2 mr-5 text-customBlue w-11/12  placeholder-customBlue"
                             />
                         </div>
