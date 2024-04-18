@@ -12,6 +12,8 @@ import {Store} from "../Store.tsx";
 import {useNavigate} from "react-router-dom";
 import {toast} from "react-toastify";
 import {ApiError, getError} from "../utils/ErrorUtil.ts";
+import DeletePopUp from "../component/DeletePopUp.tsx";
+import SuccessPopUp from "../component/SuccessPopUp.tsx";
 
 
 export function ContactListPage() {
@@ -31,6 +33,11 @@ export function ContactListPage() {
     const [genderEdit, setGenderEdit] = useState('')
     const [emailEdit, setEmailEdit] = useState('')
     const [numberEdit, setNumberEdit] = useState('')
+    const [isDeletePopupVisible, setIsDeletePopupVisible] = useState(false);
+    const [isDeleteSuccessPopupVisible, setIsDeleteSuccessPopupVisible] = useState(false);
+    const [isSaveSuccessPopupVisible, setIsSaveSuccessPopupVisible] = useState(false);
+    const [deleteRow, setDeleteRow] = useState('')
+    const [deleteName, setDeleteName] = useState('')
 
 
 
@@ -56,14 +63,29 @@ export function ContactListPage() {
         navigate(redirect)
     };
 
-    const handleDelete = async (contactId:string) => {
+
+
+    const handleDelete = async (deleteRow:string) => {
         try {
-            await deleteContact(contactId);
+            await deleteContact(deleteRow);
+            setDeleteRow('')
+            setDeleteName('')
             refetch();
+            setIsDeletePopupVisible(false);
+            setIsDeleteSuccessPopupVisible(true)
         } catch (err) {
             toast.error(getError(err as unknown as ApiError));
         }
     };
+
+
+    const handleCancelDelete = () => {
+        setDeleteRow('')
+        setDeleteName('')
+        console.log('Delete cancelled');
+        setIsDeletePopupVisible(false);
+    };
+
     async function handleSaveEdit() {
         try {
             await updateUser({
@@ -73,9 +95,11 @@ export function ContactListPage() {
                 gender: genderEdit,
                 number: numberEdit
             });
+
         } catch (err) {
             toast.error(getError(err as unknown as ApiError));
         }
+        setIsSaveSuccessPopupVisible(true)
         setEditRow('');
         refetch();
     }
@@ -83,15 +107,16 @@ export function ContactListPage() {
 
     return (
         <>
+
             <div className="flex justify-center items-center h-screen flex-col">
                 <div>
                     <Logo textColor="text-white" imageSize="w-10" textSize="text-3xl" />
                     <div>
                         <div className="flex items-center justify-between">
-                            <h1 className="font-bold text-3xl text-white">Contact</h1>
+                            <h1 className="font-bold text-4xl text-white">Contacts</h1>
 
                             <button type="button" className="custom-button w-1/4"
-                                    onClick={() => navigate(addNewContact)}>add new contest
+                                    onClick={() => navigate(addNewContact)}>Add new contact
                             </button>
 
                         </div>
@@ -156,7 +181,7 @@ export function ContactListPage() {
                                                 <span role="img"
                                                       aria-label="Delete"
                                                       className="cursor-pointer m-0.5"
-                                                      onClick={() => handleDelete(contact._id)}>🗑️</span>
+                                                      onClick={() => {setDeleteRow(contact._id);setDeleteName(contact.name); setIsDeletePopupVisible(true)}}>🗑️</span>
                                             </td>
                                         </>}
 
@@ -176,8 +201,25 @@ export function ContactListPage() {
 
 
             </div>
-
-
+            {isDeletePopupVisible && (
+                <DeletePopUp
+                    message={`Do you delete the contact "${deleteName}" ?`}
+                    onConfirm={() => handleDelete(deleteRow)}
+                    onCancel={handleCancelDelete}
+                />
+            )}
+            {isDeleteSuccessPopupVisible && (
+                <SuccessPopUp
+                    message="Your contact have been delete successfully!"
+                    onOk={() => setIsDeleteSuccessPopupVisible(false)}
+                />
+            )}
+            {isSaveSuccessPopupVisible && (
+                <SuccessPopUp
+                    message="Your contact have been save successfully!"
+                    onOk={() => setIsSaveSuccessPopupVisible(false)}
+                />
+            )}
         </>
     );
 }
