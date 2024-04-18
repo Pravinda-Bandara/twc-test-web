@@ -5,7 +5,7 @@ import {Gender, useSignupMutation} from "../hooks/contactHooks.ts";
 import {useNavigate} from "react-router-dom";
 import {toast} from "react-toastify";
 import {ApiError, getError} from "../utils/ErrorUtil.ts";
-import {UpdateValidationUtil} from "../utils/UpdateValidationUtil.ts";
+import {ContactValidationUtil} from "../utils/ContactValidationUtil.ts";
 
 export function NewContentPage() {
     const navigate = useNavigate()
@@ -24,7 +24,7 @@ export function NewContentPage() {
         event.preventDefault();
 
         try {
-            const validationError = UpdateValidationUtil(fullName, phoneNumber, email, gender);
+            const validationError = ContactValidationUtil(fullName, phoneNumber, email, gender);
             if (validationError) {
                 return;
             }

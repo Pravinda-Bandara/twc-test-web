@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { ApiError, getError } from '../utils/ErrorUtil.ts';
 import { Store } from '../Store.tsx';
-import { LoginValidationUtil } from '../utils/LoginValidationUtil.ts';
+import { UserValidationUtil } from '../utils/UserValidationUtil.ts';
 import InputFieldComponent from "../component/InputFieldComponent.tsx";
 
 
@@ -21,7 +21,7 @@ export function LoginPage() {
 
     const handleLogin = async (event: FormEvent) => {
         event.preventDefault();
-        if (!LoginValidationUtil(userName, userPassword)) {
+        if (!UserValidationUtil(userName, userPassword)) {
             return;
         }
         try {

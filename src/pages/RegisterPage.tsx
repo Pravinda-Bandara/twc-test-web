@@ -5,7 +5,7 @@ import { toast } from 'react-toastify';
 import { ApiError, getError } from '../utils/ErrorUtil.ts';
 import { useNavigate } from 'react-router-dom';
 import { useRegisterMutation } from '../hooks/userHooks.ts';
-import { LoginValidationUtil } from '../utils/LoginValidationUtil.ts';
+import { UserValidationUtil } from '../utils/UserValidationUtil.ts';
 import InputFieldComponent from "../component/InputFieldComponent.tsx";
 
 export function RegisterPage() {
@@ -21,7 +21,7 @@ export function RegisterPage() {
 
     const handleRegister = async (event: FormEvent) => {
         event.preventDefault();
-        if (!LoginValidationUtil(userName, userPassword)) {
+        if (!UserValidationUtil(userName, userPassword)) {
             return;
         }
         if (userPassword !== confirmPassword) {

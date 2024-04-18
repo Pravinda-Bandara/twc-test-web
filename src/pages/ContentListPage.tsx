@@ -13,7 +13,7 @@ import {toast} from "react-toastify";
 import {ApiError, getError} from "../utils/ErrorUtil.ts";
 import DeletePopUp from "../component/DeletePopUp.tsx";
 import SuccessPopUp from "../component/SuccessPopUp.tsx";
-import {UpdateValidationUtil} from "../utils/UpdateValidationUtil.ts";
+import {ContactValidationUtil} from "../utils/ContactValidationUtil.ts";
 
 
 export function ContactListPage() {
@@ -88,7 +88,7 @@ export function ContactListPage() {
     };
 
     async function handleSaveEdit() {
-        const validationError = UpdateValidationUtil(nameEdit, numberEdit, emailEdit, genderEdit);
+        const validationError = ContactValidationUtil(nameEdit, numberEdit, emailEdit, genderEdit);
         if (validationError) {
             return;
         }

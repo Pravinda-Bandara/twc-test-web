@@ -1,6 +1,6 @@
 import { toast } from 'react-toastify';
 
-export function LoginValidationUtil(email: string, password: string) {
+export function UserValidationUtil(email: string, password: string) {
     const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
     // Email validation

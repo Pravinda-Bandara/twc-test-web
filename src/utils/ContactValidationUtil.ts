@@ -1,6 +1,6 @@
 import { toast } from 'react-toastify';
 
-export function UpdateValidationUtil(name:string, number:string, email:string, gender:string) {
+export function ContactValidationUtil(name:string, number:string, email:string, gender:string) {
     if (name.trim() === '') {
         toast.error('Name cannot be empty');
         return 'Name cannot be empty';
