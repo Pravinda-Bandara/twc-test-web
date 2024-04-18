@@ -1,11 +1,12 @@
-import {FormEvent, useContext, useEffect, useState} from 'react';
-import Logo from "../component/Logo.tsx";
-import {Store} from "../Store.tsx";
-import {toast} from "react-toastify";
-import {ApiError, getError} from "../utils/ErrorUtil.ts";
-import {useNavigate} from "react-router-dom";
-import {useRegisterMutation} from "../hooks/userHooks.ts";
-import {LoginValidationUtil} from "../utils/LoginValidationUtil.ts";
+import React, { FormEvent, useContext, useEffect, useState } from 'react';
+import Logo from '../component/Logo.tsx';
+import { Store } from '../Store.tsx';
+import { toast } from 'react-toastify';
+import { ApiError, getError } from '../utils/ErrorUtil.ts';
+import { useNavigate } from 'react-router-dom';
+import { useRegisterMutation } from '../hooks/userHooks.ts';
+import { LoginValidationUtil } from '../utils/LoginValidationUtil.ts';
+import InputFieldComponent from "../component/InputFieldComponent.tsx";
 
 export function RegisterPage() {
     const [userName, setuserName] = useState('');
@@ -13,13 +14,11 @@ export function RegisterPage() {
     const [confirmPassword, setConfirmPassword] = useState('');
 
     const { state, dispatch } = useContext(Store);
-    const { userInfo } = state
-    const navigate = useNavigate()
-    const redirect ='/contacts'
-    const { mutateAsync: register ,isPending} = useRegisterMutation();
+    const { userInfo } = state;
+    const navigate = useNavigate();
+    const redirect = '/contacts';
+    const { mutateAsync: register, isPending } = useRegisterMutation();
 
- /*   const PASSWORD_REGEX = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*])(?=.*[a-zA-Z]).{8,}$/;
-*/
     const handleRegister = async (event: FormEvent) => {
         event.preventDefault();
         if (!LoginValidationUtil(userName, userPassword)) {
@@ -35,7 +34,7 @@ export function RegisterPage() {
         try {
             const data = await register({
                 userName,
-                userPassword,
+                userPassword
             });
             navigate('/welcome');
             dispatch({ type: 'USER_SIGNIN', payload: data.userId });
@@ -60,50 +59,48 @@ export function RegisterPage() {
                     <h1 className="font-bold text-5xl my-5 my-10 text-white">Register Now!</h1>
                     <form onSubmit={handleRegister}>
                         <div>
-                            <input
+                            <InputFieldComponent // Changed from InputField to InputFieldComponent
                                 type="text"
                                 placeholder="e-mail"
                                 value={userName}
                                 onChange={(e) => setuserName(e.target.value)}
-                                className="custom-input"
                             />
                         </div>
                         <div>
-                            <input
+                            <InputFieldComponent // Changed from InputField to InputFieldComponent
                                 type="password"
                                 placeholder="create password"
                                 value={userPassword}
                                 onChange={(e) => setuserPassword(e.target.value)}
-                                className="custom-input"
                             />
                         </div>
                         <div>
-                            <input
+                            <InputFieldComponent // Changed from InputField to InputFieldComponent
                                 type="password"
                                 placeholder="confirm password"
                                 value={confirmPassword}
                                 onChange={(e) => setConfirmPassword(e.target.value)}
-                                className="custom-input"
                             />
                         </div>
 
                         <div>
-                            <button  type="submit" disabled={isPending} className="custom-button w-2/5">Register</button>
+                            <button type="submit" disabled={isPending} className="custom-button w-2/5">
+                                Register
+                            </button>
                         </div>
                     </form>
 
                     <div>
-                        <button className="underline text-white text-lg" type="button" onClick={()=>navigate("/login")}>&lt; Back To Login
+                        <button className="underline text-white text-lg" type="button" onClick={() => navigate('/login')}>
+                            &lt; Back To Login
                         </button>
                     </div>
                 </div>
-
 
                 <div className="flex items-center">
                     <Logo textColor="text-black" imageSize="w-20" textSize="text-5xl" />
                 </div>
             </div>
-
         </>
     );
 }
