@@ -30,8 +30,9 @@ export function WelcomePage() {
                 </button>
             </div>
             <div className="self-end">
-                <button className="underline float-end text-white mx-5 text-xl" type="button"
-                        onClick={() => handleLogOut()}> LogOut
+                <i className="bi bi-box-arrow-left text-2xl text-white"></i>
+                <button className="underline text-lg float-end text-white mx-2 text-xl" type="button"
+                        onClick={() => handleLogOut()}>LogOut
                 </button>
             </div>
 

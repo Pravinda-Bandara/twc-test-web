@@ -1,6 +1,5 @@
 
 import Logo from "../component/Logo.tsx";
-
 import {
     Gender,
     useDeleteContactMutation,
@@ -51,7 +50,7 @@ export function ContactListPage() {
 
     const handleEdit = (rowId: string, name: string, gender: Gender, email: string, number: string) => {
         setNameEdit(name)
-        setGenderEdit(gender)
+        setGenderEdit(gender )
         setEmailEdit(email)
         setNumberEdit(number)
         setEditRow(rowId)
@@ -67,12 +66,13 @@ export function ContactListPage() {
 
     const handleDelete = async (deleteRow:string) => {
         try {
+            setIsDeleteSuccessPopupVisible(true)
             await deleteContact(deleteRow);
             setDeleteRow('')
             setDeleteName('')
             refetch();
             setIsDeletePopupVisible(false);
-            setIsDeleteSuccessPopupVisible(true)
+
         } catch (err) {
             toast.error(getError(err as unknown as ApiError));
         }
@@ -177,11 +177,16 @@ export function ContactListPage() {
                         <span role="img"
                               aria-label="Edit"
                               className="cursor-pointer m-0.5"
-                              onClick={() => handleEdit(contact._id, contact.name, contact.gender, contact.email, contact.number)}>✏️</span>
+                              onClick={() => handleEdit(contact._id, contact.name, contact.gender, contact.email, contact.number)}><i
+                            className="bi bi-pen-fill text-customBlue hover:text-green-500 mr-2"></i></span>
                                                 <span role="img"
                                                       aria-label="Delete"
                                                       className="cursor-pointer m-0.5"
-                                                      onClick={() => {setDeleteRow(contact._id);setDeleteName(contact.name); setIsDeletePopupVisible(true)}}>🗑️</span>
+                                                      onClick={() => {
+                                                          setDeleteRow(contact._id);
+                                                          setDeleteName(contact.name);
+                                                          setIsDeletePopupVisible(true)
+                                                      }}><i className="bi bi-trash text-customBlue hover:text-red-500"></i></span>
                                             </td>
                                         </>}
 
@@ -194,9 +199,13 @@ export function ContactListPage() {
                     </div>
                 </div>
                 <div className="self-end mb-10">
-                    <button className="underline float-end text-white mt-5" type="button"
-                            onClick={() => handleLogOut()}> LogOut
-                    </button>
+                    <div className="float-end ">
+                        <i className="bi bi-box-arrow-left text-2xl text-white"></i>
+                        <button className="underline text-lg text-white mt-5 mx-2" type="button"
+                                onClick={() => handleLogOut()}>LogOut
+                        </button>
+                    </div>
+
                 </div>
 
 

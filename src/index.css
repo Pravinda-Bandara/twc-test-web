@@ -1,7 +1,6 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
 @layer components {
     .custom-button {
         @apply px-6 w-1/5 my-10 py-2 rounded bg-customBlue text-white border rounded-2xl border-white hover:bg-white hover:text-customBlue hover:border-customBlue;

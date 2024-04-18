@@ -128,12 +128,22 @@ export function NewContentPage() {
                     </form>
                 </div>
                 <div className="self-end">
-                    <button className="underline float-end text-white mx-5 text-xl" type="button"
-                            onClick={() => handleLogOut()}> LogOut
-                    </button>
-                    <button className="underline float-end text-white text-xl" type="button"
-                            onClick={() => navigate("/contacts")}> Show My Contacts
-                    </button>
+                    <div className="self-end">
+                        <div className="float-end flex flex-row-reverse">
+
+
+                            <button className="underline  text-white mx-2 text-xl" type="button"
+                                    onClick={() => handleLogOut()}>LogOut
+                            </button>
+                            <i className="bi bi-box-arrow-left text-2xl text-white"></i>
+
+                            <button className="underline float-end text-white text-xl px-9" type="button"
+                                    onClick={() => navigate("/contacts")}> Show My Contacts
+                            </button>
+
+                        </div>
+                    </div>
+
                 </div>
 
             </div>
