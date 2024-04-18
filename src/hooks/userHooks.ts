@@ -1,21 +1,17 @@
 import {useMutation} from "@tanstack/react-query";
 import apiClient from "../apiClient.ts";
+import { userRequest, userResponse} from "../types/UserTypes.ts";
 
-type userID={
-    userId:string
-}
+
 
 export const useLoginMutation = () =>
     useMutation({
         mutationFn: async ({
                                userName,
                                userPassword,
-                           }: {
-            userName: string
-            userPassword: string
-        }) =>
+                           }: userRequest) =>
             (
-                await apiClient.post<userID>(`api/v1/users/login`, {
+                await apiClient.post<userResponse>(`api/v1/users/login`, {
                     userName,
                     userPassword,
                 })
@@ -29,12 +25,9 @@ export const useRegisterMutation = () =>
         mutationFn: async ({
                                userName,
                                userPassword,
-                           }: {
-            userName: string
-            userPassword: string
-        }) =>
+                           }: userRequest) =>
             (
-                await apiClient.post<userID>(`api/v1/users/register`, {
+                await apiClient.post<userResponse>(`api/v1/users/register`, {
                     userName,
                     userPassword,
                 })

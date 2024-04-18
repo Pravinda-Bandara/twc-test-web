@@ -1,13 +1,9 @@
 import {useMutation, useQuery} from "@tanstack/react-query";
 import apiClient from "../apiClient.ts";
-import * as mongoose from "mongoose";
+import {ContactRequest, ContactResponse} from "../types/ContactTypes.ts";
 
 // Define a function to get the contact ID from localStorage
 const getContactIdFromLocalStorage = () => {
-    /*let contactId = localStorage.getItem('userInfo');
-    if (contactId) {
-        contactId = contactId.replace(/^"(.*)"$/, '$1');
-    }*/
     const contactId =JSON.parse(localStorage.getItem('userInfo')!);
     return contactId ? contactId : '';
 
@@ -18,21 +14,7 @@ export enum Gender {
     MALE = "male",
     FEMALE = "female"
 }
-interface ContactRequest {
-    number: string;
-    name: string;
-    email: string;
-    gender: Gender;
-    user: string;
-}
 
-export interface ContactResponse {
-    _id: mongoose.Types.ObjectId | undefined |string ;
-    number: string;
-    name: string;
-    email: string;
-    gender: Gender;
-}
 
 export const useGetContactListQuery = () =>
     useQuery({
